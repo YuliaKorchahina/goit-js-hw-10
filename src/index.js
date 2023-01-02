@@ -6,7 +6,7 @@ import Notiflix from 'notiflix';
 const input = document.querySelector('#search-box');
 const list = document.querySelector('.country-list');
 const info = document.querySelector('.country-info');
-const DEBOUNCE_DELAY = 500;
+const DEBOUNCE_DELAY = 300;
 
 const onSearch = evt => {
   evt.preventDefault();
@@ -37,8 +37,7 @@ function renderList(data) {
         return `<li>
           <p><b>Name</b>: ${data.name.common}</p>
           <p><b>Flags</b>: <img src="${data.flags.svg}" alt="${data.flags.svg}" width = "60" heigth='20'></p>
-          <p><b>Capital</b>: ${data.capital}</p>
-          <p><b>Population</b>: ${data.population}</p>
+          
         </li>`;
       })
       .join('');
@@ -47,19 +46,21 @@ function renderList(data) {
   } else {
     const markup = data
       .map(({ flags, name, capital, population, languages }) => {
+        console.log(languages);
         return `<div class="card-js">
       <h2>
         <img src="${flags.svg}" alt="${name.common}" width = "45">
         ${name.official}
       </h2>
       <div>
-        <p><b>Capital:</b><span>${capital}</span></p>
-        <p><b>Population:</b><span>${population}</span></p>
-        <p><b>Languages:</b><span>${data.values(languages)}</span></p>
+        <p><b>Capital: </b>${capital}</p>
+        <p><b>Population: </b>${population}</p>
+        <p><b>Languages: </b>${Object.values(languages)}</p>
       </div>
     </div>`;
       })
       .join('');
+    console.log(markup);
     list.innerHTML = '';
     info.innerHTML = markup;
   }
